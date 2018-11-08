@@ -30,7 +30,11 @@ export class EntryDetailPage {
     }
 
   private saveEntry() {
-    this.entryDataService.addEntry(this.entry);
+    if (this.entry.id === -1) { 
+      this.entryDataService.addEntry(this.entry);
+    } else {
+      this.entryDataService.updateEntry(this.entry.id, this.entry);
+    }
     this.navCtrl.pop();
   }
 }
