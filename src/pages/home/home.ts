@@ -11,13 +11,30 @@ import { EntryDataServiceProvider } from '../../providers/entry-data-service/ent
 export class HomePage {
   private entries: Entry[] = [];
 
-
   constructor(public navCtrl: NavController, private entryService: EntryDataServiceProvider) {
+    this.entryService.getObservable().subscribe(update => {
+      this.entries = entryService.getEntries();
+      console.log(this.entries)
+    });
+
     this.entries = entryService.getEntries();
+}
+
+/* Simple way to get the updated data
+  public ionViewWillEnter() {
+    this.entries = this.entryService.getEntries();
   }
+*/
 
   private addEntry() {
+  	// console.log("hi there")
     this.navCtrl.push(EntryDetailPage);
   }
+
+  private editEntry(entryID: number) {
+    console.log("editing entry ", entryID);
+    this.navCtrl.push(EntryDetailPage, {"entryID": entryID});
+  }
+
 }
 
