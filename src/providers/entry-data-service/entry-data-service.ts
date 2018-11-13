@@ -53,17 +53,8 @@ export class EntryDataServiceProvider {
       {
         id: this.getUniqueID(),
         title: "Latest Entry",
-        text: "Today I went to my favorite class, SI 669. It was super great."
-      },
-      {
-        id: this.getUniqueID(),
-        title: "Earlier Entry",
-        text: "I can't wait for Halloween! I'm going to eat so much candy!!!"
-      },
-      {
-        id: this.getUniqueID(),
-        title: "First Entry",
-        text: "OMG Project 1 was the absolute suck!"
+        text: "Today I went to my favorite class, SI 669. It was super great.",
+        timestamp: ""
       }
     ];
   }
@@ -93,8 +84,10 @@ export class EntryDataServiceProvider {
     return undefined;
   }
 
+
   public addEntry(entry:Entry) {
     entry.id = this.getUniqueID();
+    entry.timestamp = new Date();
     this.entries.push(entry);
     this.notifySubscribers();
     this.saveData();
@@ -104,9 +97,11 @@ export class EntryDataServiceProvider {
     let entryToUpdate: Entry = this.findEntryByID(id); 
     entryToUpdate.title = newEntry.title;
     entryToUpdate.text = newEntry.text;
+    entryToUpdate.timestamp = new Date();
     this.notifySubscribers();
     this.saveData();
   }
+  
   
   public removeEntry(id: number): void {
     for (let i = 0; i < this.entries.length; i++) {

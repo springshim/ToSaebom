@@ -10,21 +10,39 @@ import { EntryDataServiceProvider } from '../../providers/entry-data-service/ent
 })
 export class HomePage {
   private entries: Entry[] = [];
+  private myDate;
 
   constructor(public navCtrl: NavController, 
               private entryService: EntryDataServiceProvider) {
     this.entryService.getObservable().subscribe(update => {
-      this.entries = entryService.getEntries();
+    this.entries = entryService.getEntries();
+
+
+    this.entries.sort(function(a,b){
+       if (a.timestamp > b.timestamp) {
+        console.log("A is bigger")
+        return -1;
+      }
+      else {
+        return 1;
+      }   
+    })
+
       console.log(this.entries);
     });
-    this.entries = entryService.getEntries();
-  }
 
-/* Simple way to get the updated data
-  public ionViewWillEnter() {
-    this.entries = this.entryService.getEntries();
-  }
-*/
+    this.entries = entryService.getEntries();
+    this.entries.sort(function(a,b){
+       if (a.timestamp > b.timestamp) {
+        console.log("A is bigger")
+        return -1;
+      }
+      else {
+        return 1;
+      }   
+    })
+
+}
 
   private addEntry() {
   	// console.log("hi there")
